@@ -6,19 +6,23 @@ import { Dot } from "./dot";
 interface MealItemProps {
   id: number
   date: Date,
-  name: string,
+  title: string,
   description: string
-  isDiet: boolean
+  onDiet: boolean
 }
 
-export function MealItem({id, date, name, description, isDiet}: MealItemProps) {
-   function formatTime(date: Date) {
+export interface MealProps {
+  meal: MealItemProps
+}
+
+export function MealItem({ meal }: MealProps) {
+  function formatTime(date: Date) {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
 
-  const  timeFormatted = formatTime(date)
+  const  timeFormatted = formatTime(meal.date)
 
   return (
     <View style={styles.container}>
@@ -29,11 +33,11 @@ export function MealItem({id, date, name, description, isDiet}: MealItemProps) {
         style={styles.divider} 
       />
       <Text size="md" color="gray.200" style={{ flex: 1}}>
-        Almoço 
+        {meal.title}
       </Text>
       <Dot 
         size={14}  
-        color={theme.colors.red.mid}
+        color={meal.onDiet ? theme.colors.green.mid : theme.colors.red.mid}
       />
     </View>
   )

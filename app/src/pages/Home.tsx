@@ -7,12 +7,24 @@ import { Button } from "../components/button";
 import { Percent } from "../components/percent";
 import { Text } from "../components/ui/Typography/Text";
 import { RectButton } from "react-native-gesture-handler";
-import { MealItem } from "../components/meal-item";
+import { MealItem, MealProps } from "../components/meal-item";
 import { meals } from "../mocks/meal-mock";
-
+import { useNavigation } from "@react-navigation/native";
 
 export function Home () {
   const { top, bottom } = useSafeAreaInsets();
+
+  const navigation = useNavigation()
+
+  const toStatistics = () => {
+    navigation.navigate('Statistics')
+  }
+
+  const toMeal = ( meal: MealProps ) => {
+    navigation.navigate('Meal', {
+      meal
+    })
+  }
 
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
@@ -20,7 +32,7 @@ export function Home () {
         <LogoSvg />
         <Avatar />
       </View>
-      <RectButton activeOpacity={0}>
+      <RectButton activeOpacity={0} onPress={toStatistics}>
         <Percent
           icon="arrow-up-right"
           variant="red"
@@ -44,6 +56,16 @@ export function Home () {
 
     <FlatList
       data={meals}
+      ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+      contentContainerStyle={{ paddingBottom: 24 }}
+      keyExtractor={(item) => String(item.id)}
+      renderItem={({ item } ) => (
+        <RectButton onPress={() => {toMeal({ meal: item })}}>
+          <MealItem 
+            meal={item}
+          />
+        </RectButton>
+      )}
     />
     </View>
   )
@@ -63,5 +85,6 @@ const styles = StyleSheet.create({
   listHeader: {
     marginTop: 40,
     gap: 8,
+    marginBottom: 32,
   }
 })

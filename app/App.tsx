@@ -1,15 +1,15 @@
 
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from 'react';
-import { Home } from './src/pages/Home';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { CreateMeal } from './src/pages/MealCreate';
 
 import { useFonts } from 'expo-font';
 import {
   NunitoSans_400Regular,
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans';
+
+import { Routes } from './src/routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +22,7 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <Home />
+        <Routes />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
