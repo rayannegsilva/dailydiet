@@ -3,7 +3,7 @@ import { MealProps } from "../components/meal-item";
 type NavigationType = {
   Home: undefined;
   Statistics: undefined;
-  Meal: { meal: MealProps }
+  Meal:  MealProps
 };
 
 declare global {

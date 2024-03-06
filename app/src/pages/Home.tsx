@@ -21,9 +21,9 @@ export function Home () {
   }
 
   const toMeal = ( meal: MealProps ) => {
-    navigation.navigate('Meal', {
+    navigation.navigate('Meal', 
       meal
-    })
+    )
   }
 
   return (

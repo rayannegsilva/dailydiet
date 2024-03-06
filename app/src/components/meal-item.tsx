@@ -4,8 +4,8 @@ import { theme } from "../global/theme";
 import { Dot } from "./dot";
 
 interface MealItemProps {
-  id: number
-  date: Date,
+  id: string
+  date: string,
   title: string,
   description: string
   onDiet: boolean
@@ -16,13 +16,16 @@ export interface MealProps {
 }
 
 export function MealItem({ meal }: MealProps) {
+
+  const toDate = new Date(meal.date)
+
   function formatTime(date: Date) {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   }
 
-  const  timeFormatted = formatTime(meal.date)
+  const  timeFormatted = formatTime(toDate)
 
   return (
     <View style={styles.container}>
