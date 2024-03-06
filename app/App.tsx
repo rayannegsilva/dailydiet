@@ -10,6 +10,9 @@ import {
 } from '@expo-google-fonts/nunito-sans';
 
 import { Routes } from './src/routes';
+import { AuthProvider } from './src/hooks/auth';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './src/lib/react-query';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +25,11 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <Routes />
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <Routes />
+          </QueryClientProvider>
+        </AuthProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

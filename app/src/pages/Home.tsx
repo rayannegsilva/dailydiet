@@ -1,4 +1,4 @@
-import {FlatList, StyleSheet, View } from "react-native";
+import {ActivityIndicator, FlatList, Pressable, StyleSheet, View } from "react-native";
 
 import LogoSvg from '../assets/logo.svg'
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -8,59 +8,92 @@ import { Percent } from "../components/percent";
 import { Text } from "../components/ui/Typography/Text";
 import { RectButton } from "react-native-gesture-handler";
 import { MealItem, MealProps } from "../components/meal-item";
-import { meals } from "../mocks/meal-mock";
 import { useNavigation } from "@react-navigation/native";
+import { theme } from "../global/theme";
+import { getMealById, getMeals, getMetrics } from "../hooks/meal";
+import { MealNavigationProps } from "../@types/navigation";
+import { getUserMeals } from "../hooks/useMeal";
+import { getUserStats } from "../hooks/useStatistics";
+// import { getUserStatistics } from "../hooks/useStatistics";
 
 export function Home () {
-  const { top, bottom } = useSafeAreaInsets();
-
+  const { top } = useSafeAreaInsets();
   const navigation = useNavigation()
+
+  const meal = getUserMeals()
+  const queryStats = getUserStats()
 
   const toStatistics = () => {
     navigation.navigate('Statistics')
   }
 
-  const toMeal = ( meal: MealProps ) => {
+  const handleToMeal = (mealId: string) => {
     navigation.navigate('Meal', {
-      meal
-    })
+      mealId
+    });
+  };
+
+  const handleToProfile = () => {
+    navigation.navigate('Profile')
   }
+
+function handleCreateMeal() {
+  navigation.navigate('MealCreate')
+}
 
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
         <LogoSvg />
-        <Avatar />
+        <Pressable onPress={handleToProfile}>
+           <Avatar />
+        </Pressable> 
       </View>
-      <RectButton activeOpacity={0} onPress={toStatistics}>
-        <Percent
-          icon="arrow-up-right"
-          variant="red"
-        >
-          <Text weight="bold" size={"2xl"}>
-            90,86%
-          </Text>
-          <Text>
-            das refeições dentro da dieta
-          </Text>
-        </Percent>
-      </RectButton>
+     {
+      queryStats.userStatsLoading 
+      ? (<ActivityIndicator 
+          size={20}
+          color={theme.colors.green.dark}
+        />) :
+        (
+          <RectButton activeOpacity={0} onPress={toStatistics}>
+            <Percent
+              icon="arrow-up-right"
+              variant={queryStats.userStats.insideOfDiet ? 'green' : 'red' }
+            >
+              <Text weight="bold" size={"2xl"}>
+                {queryStats.userStats.percentage}%
+              </Text> 
+              <Text> das refeições dentro da dieta </Text>
+            </Percent>
+         </RectButton>
+        
+        )
+     }
+          
 
       <View style={styles.listHeader}>
         <Text size="md" color="gray.100">Refeições</Text>
         <Button
           icon="plus"
           title="Refeições"
+          onPress={handleCreateMeal}
         />
       </View>
 
+      {(meal.mealsLoading || meal.mealsFetching ) &&  (
+        <ActivityIndicator 
+        style={{ marginTop: 40 }}
+        color={theme.colors.green.dark}
+      />)}
+
     <FlatList
-      data={meals}
+      data={meal.meals}
       ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
       contentContainerStyle={{ paddingBottom: 24 }}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => item.id}
       renderItem={({ item } ) => (
-        <RectButton onPress={() => {toMeal({ meal: item })}}>
+        <RectButton onPress={() => handleToMeal(item.id)}>
           <MealItem 
             meal={item}
           />
@@ -74,7 +107,8 @@ export function Home () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    backgroundColor: theme.colors.gray[700]
   },
   header: {
     flexDirection: 'row',

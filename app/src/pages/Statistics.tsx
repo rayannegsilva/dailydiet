@@ -7,28 +7,32 @@ import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { MealItem } from "../components/meal-item";
 import { Percent } from "../components/percent";
+import { getMetrics } from "../hooks/meal";
+import { getUserStats } from "../hooks/useStatistics";
+
 
 export function Statistics() {
   const safeAreaInsets = useSafeAreaInsets();
-
   const navigation = useNavigation()
+
+  const queryStats = getUserStats()
 
   const goBack = () => {
     navigation.goBack()
   }
 
   return (
-  <View style={[styles.container, { paddingTop: safeAreaInsets.top + 12, backgroundColor: theme.colors.green.light }]}>
-    <StatusBar backgroundColor={theme.colors.green.light}/>
+  <View style={[styles.container, { paddingTop: safeAreaInsets.top + 12, backgroundColor: queryStats.userStats.insideOfDiet ? theme.colors.green.light : theme.colors.red.light }]}>
+    <StatusBar backgroundColor={queryStats.userStats.insideOfDiet ? theme.colors.green.light : theme.colors.red.light }/>
     <View style={styles.header}>
       <BorderlessButton style={styles.backButton} onPress={goBack}>
         <Feather
           name="arrow-left"
           size={24}
-          color={theme.colors.green.dark}
+          color={queryStats.userStats.insideOfDiet ? theme.colors.green.dark : theme.colors.red.dark }
         />
       </BorderlessButton>
-      <Text size={"3xl"} weight="bold">90,86%</Text>
+      <Text size={"3xl"} weight="bold">{queryStats.userStats.percentage}%</Text>
       <Text>das refeições dentro da dieta</Text>
     </View>
 
@@ -37,22 +41,22 @@ export function Statistics() {
 
       <View style={styles.cardsContainer}>
         <Percent>
-          <Text weight="bold" size={"2xl"} color="gray.200">22</Text>
+          <Text weight="bold" size={"2xl"} color="gray.200">{queryStats.userStats.bestSequence}</Text>
           <Text color="gray.200" size={"sm"}>melhor sequência de pratos dentro da dieta</Text>
         </Percent>
 
         <Percent>
-          <Text weight="bold" size={"2xl"} color="gray.200">109</Text>
+          <Text weight="bold" size={"2xl"} color="gray.200">{queryStats.userStats.total}</Text>
           <Text color="gray.200" size={"sm"}>refeições registradas</Text>
         </Percent>
 
         <View style={styles.row}>
           <Percent style={{ flex: 1 }} variant="green">
-            <Text weight="bold" size={"2xl"} color="gray.200">109</Text>
+            <Text weight="bold" size={"2xl"} color="gray.200">{queryStats.userStats.inDiet}</Text>
             <Text color="gray.200" size={"sm"} style={styles.text}>refeições dentro da dieta</Text>
           </Percent>
           <Percent style={{ flex: 1 }} variant="red">
-            <Text weight="bold" size={"2xl"} color="gray.200" >109</Text>
+            <Text weight="bold" size={"2xl"} color="gray.200" >{queryStats.userStats.outDiet}</Text>
             <Text color="gray.200" size={"sm"} style={styles.text}>refeições fora da dieta</Text>
           </Percent>
         </View>
