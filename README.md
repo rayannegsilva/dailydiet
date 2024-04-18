@@ -39,6 +39,7 @@ Você precisará rodar os seguintes comandos:
   $ expo npm start
 ```
 Baixando o clone da aplicação, rode npm i em cada uma das pastas para baixar suas dependências.
+Caso opte por rodar usando o docker, o acesso ao seu banco de dados se dará por esse link: mongodb://localhost:27017. Ele rodará na porta padrão do mongo.
 
 # 👩‍💻 Sobre 
 
