@@ -1,3 +1,4 @@
+import { BadRequestError, NotFoundError } from "../helpers/api-error"
 import { Meal } from "../model/Meal"
 import { User } from "../model/User"
 
@@ -19,19 +20,20 @@ export class EditMealService {
 
     const user = await User.findById(userId)
     if(!user) {
-      throw new Error('Usuário não encontrado')
+      throw new NotFoundError('Usuário não encontrado')
     }
 
     const mealAlreadyExists = await Meal.findById(mealId)
     if(!mealAlreadyExists) {
-      throw new Error('Refeição inexistente.')
+      throw new NotFoundError('Refeição inexistente.')
     }
 
     const updateMeal = await Meal.findByIdAndUpdate(mealId, mealData, { new: true })
+
     if (!updateMeal) {
-      throw new Error('Não vou possível editar o Meal.')
+      throw new BadRequestError('Não vou possível editar o Meal.')
     }
 
-    return { updateMeal }
+    return updateMeal
   }
 }

@@ -9,8 +9,6 @@ export class UserStatisticsController {
       const userStatisticsService = new UserStatisticsService()
       const userStatistics =  await userStatisticsService.execute({ userId })
 
-      console.log(userStatistics)
-
       return res.status(200).json(userStatistics)
     } catch (error) {
       console.log(error)

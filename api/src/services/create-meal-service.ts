@@ -1,3 +1,4 @@
+import { NotFoundError } from "../helpers/api-error"
 import { Meal } from "../model/Meal"
 import { User } from "../model/User"
 
@@ -23,14 +24,12 @@ export class CreateMealService {
     const user = await User.findById({ _id: userId })
 
     if(!user) {
-      throw new Error('Usuário não encontrado.')
+      throw new NotFoundError('Usuário não encontrado.')
     }
 
     const meal = await Meal.create({
       title, description, date, isDiet, userId
     })
-
-    console.log(meal)
 
     return { meal }
   }

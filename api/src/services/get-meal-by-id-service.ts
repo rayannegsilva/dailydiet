@@ -1,3 +1,4 @@
+import { NotFoundError } from "../helpers/api-error"
 import { Meal } from "../model/Meal"
 import { User } from "../model/User"
 
@@ -12,13 +13,13 @@ export class GetMealByIDService {
     const user = await User.findById(userId)
 
     if (!user) {
-      throw new Error('Usuário não encontrado.')
+      throw new NotFoundError('Usuário não encontrado.')
     }
 
     const meal = await Meal.findById(mealId)
 
     if (!meal) {
-        throw new Error('Refeição não encontrada.')
+        throw new NotFoundError('Refeição não encontrada.')
       }
 
     const mealById = {

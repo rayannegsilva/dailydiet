@@ -14,6 +14,7 @@ export class GetMealByIDController {
       return res.status(200).json(meal)
     } catch (error) {
       console.log(error)
+      return error
     }
   }
 }

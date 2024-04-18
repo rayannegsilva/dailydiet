@@ -15,6 +15,7 @@ export class EditMealController {
       return res.json(mealUpdate)
     } catch (error) {
       console.log(error)
+      return error
     }
   }
 }
