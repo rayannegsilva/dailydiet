@@ -1,6 +1,6 @@
 # Daily Diet
 
-Aplicação utilizada para controle de dietas. Cadastre suas refeições, veja suas informações e acompahe seu progresso de maneira rápida e prática.
+Aplicação utilizada para controle de dietas. Cadastre suas refeições, veja suas informações e acompanhe seu progresso de maneira rápida e prática.
 
 ## Layout
 
