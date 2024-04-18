@@ -7,6 +7,7 @@ import { MealCreate } from '../pages/MealCreate'
 import { MealEdit } from '../pages/MealEdit'
 import { Feedback } from '../pages/Feedback'
 import { Profile } from '../pages/Profile'
+import { PasswordChangePage } from '../pages/PasswordChangePage'
 
 
 const { Navigator, Screen } = createNativeStackNavigator()
@@ -45,6 +46,10 @@ export function PrivateStackRoutes() {
       <Screen 
         name='Profile'
         component={Profile}
+      />
+        <Screen 
+        name='PasswordChangePage'
+        component={PasswordChangePage}
       />
     </Navigator>
   )

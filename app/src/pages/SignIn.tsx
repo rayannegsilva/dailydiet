@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import LogoSVG from '../assets/logo.svg'
 import { theme } from "../global/theme"
 import { ControllerTextInput } from "../components/form/controller-input"
@@ -8,10 +8,15 @@ import { z } from 'zod';
 import { Button } from "../components/button"
 import { useAuth } from "../hooks/auth"
 import { useNavigation } from "@react-navigation/native"
+import { useState } from "react"
+import { Text } from "../components/ui/Typography/Text"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 export function SignIn() {
   const { signIn, user } = useAuth()
-  const navigate = useNavigation()
+  const navigation = useNavigation()
+
+  const [loading, isLoading] = useState(false)
 
   const signUpSchema = z.object({
     email: z.string({ required_error: 'Email é obrigatório'}).email('Email é inválido'),
@@ -26,16 +31,20 @@ export function SignIn() {
 
   const handleSubmit = async (data: SignInData) => {
     try {
-      const email = data.email
-      const password = data.password
-      console.log(email, password)
-
-      await signIn(email, password)
-      console.log(user)
-
+        isLoading(true)
+        const email = data.email
+        const password = data.password
+        await signIn(email, password)
     } catch (error) {
+      isLoading(false)
       console.log(error)
+    } finally {
+      isLoading(false)
     }
+  }
+
+  const handleSignUp = () => {
+    navigation.navigate('SignUp')
   }
 
   return (
@@ -68,7 +77,19 @@ export function SignIn() {
             <Button
               title="Entrar"
               onPress={() => form.handleSubmit(handleSubmit)()}
+              enabled={form.formState.isValid || loading}
+              isLoading={loading}
             />
+
+            <View style={{ alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={{textAlign: 'center'}}>
+                Não é cadastrado?{' '}
+                Cadastra-se rapidamente{' '}
+                <Pressable style={{ alignItems: 'center', justifyContent: 'center'}} onPress={handleSignUp}>
+                 <Text weight="bold" color="green.dark">clicando aqui!</Text>
+                </Pressable>
+              </Text>
+            </View>         
           </View>
         </View>
     </TouchableWithoutFeedback>
@@ -78,7 +99,7 @@ export function SignIn() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.gray[700],
+    backgroundColor: theme.colors.white,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',

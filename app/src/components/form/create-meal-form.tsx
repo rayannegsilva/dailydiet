@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { Controller, UseFormReturn } from "react-hook-form";
 import { ControllerDatePicker } from "./controller-datepicker";
 import { ButtonOption } from "../button-option";
+import { Text } from "../ui/Typography/Text";
 
 export const mealSchema = z.object({
   title: z.string({ required_error: 'É necessário informar um nome.' }),
@@ -57,8 +58,8 @@ export function CreateMealForm({ form }: MealFormProps) {
       <Controller 
         control={form.control}
         name="isDiet"
-        render={({ field }) => (
-          <>
+        render={({ field, fieldState }) => (
+        <View>
           <View style={{ flexDirection: 'row', gap: 12}}>
             <ButtonOption 
               label="Sim"
@@ -73,7 +74,13 @@ export function CreateMealForm({ form }: MealFormProps) {
                 selected={field.value === 'out-diet'}
             />
           </View>
-          </>
+
+          {fieldState.error && (
+              <Text size={"sm"} color="red.dark">
+                {fieldState.error.message}
+              </Text>
+          )}
+          </View>
         )}
       
       />

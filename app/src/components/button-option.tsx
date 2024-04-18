@@ -12,7 +12,6 @@ interface ButtonOptionProps extends RectButtonProps {
 }
 
 export function ButtonOption({ label, isDiet, selected, ...rest }: ButtonOptionProps) {
-
   return (
     <RectButton
       {...rest}

@@ -12,6 +12,7 @@ import { Button } from "../components/button";
 
 import { getUserMealById, updatedUserMeal } from "../hooks/useMeal";
 import { MealNavigationProps } from "../@types/navigation";
+import { HeaderSimple } from "../components/header-simple";
 
 
 export function MealEdit() {
@@ -58,7 +59,8 @@ export function MealEdit() {
         date: data.date,
         isDiet
       })
-   
+
+      navigation.navigate('Home')
     } catch (error) {
      console.log(error)
     }
@@ -67,13 +69,9 @@ export function MealEdit() {
   return (
     <View style={[styles.container,  { paddingTop: top + 12 }]}>
       <StatusBar backgroundColor={theme.colors.gray[500]}/>
-      <View style={styles.header}>
-       <RectButton style={styles.goBackButton} onPress={goBack}>
-        <AntDesign name="arrowleft" size={24} color={theme.colors.gray[200]}/>
-       </RectButton>
-
-       <Text size="lg" weight="bold">Editar Refeição</Text>
-      </View>
+      <HeaderSimple 
+        title="Editar refeição"
+      />
 
       <View style={[styles.content, { paddingBottom: bottom + 12 }]}>
 
@@ -81,12 +79,12 @@ export function MealEdit() {
           form={form}
         />
 
-       <View style={{ marginTop: 'auto'}}>
+       {/* <View style={{ marginTop: 'auto'}}>
           <Button
             onPress={() => form.handleSubmit(onEditMeal)()}
             title="Cadastrar Refeição"
           />
-        </View>   
+        </View>    */}
       </View>
     </View>
   )
@@ -96,18 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.gray[500],
-  },
-  header: {
-    position: 'relative',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  goBackButton: {
-    position: 'absolute',
-    left: 16,
-    top: -8,
-    padding: 8,
-    borderRadius: 6,
   },
   content: {
     backgroundColor: theme.colors.white,

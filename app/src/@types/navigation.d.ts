@@ -16,6 +16,8 @@ type NavigationType = {
   MealEdit: { mealId: string };
   Feedback: FeedbackProps;
   Profile: undefined;
+  SignIn: undefined;
+  SignUp: undefined;
 };
 
 declare global {

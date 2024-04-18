@@ -8,8 +8,6 @@ export function getUserStats() {
     queryFn: async () => {
       const response = await api.get<GetStatisticsProps>('/api/stats')
 
-      console.log(response.data)
-
       const percentage =
       response.data.total === 0
         ? 0
@@ -17,7 +15,7 @@ export function getUserStats() {
 
         const insideOfDiet = percentage >= 80
 
-    return { ...response.data, 
+         return { ...response.data, 
             percentage: Number.isInteger(percentage)
               ? String(percentage)
               : percentage.toFixed(2).replace('.', ','),

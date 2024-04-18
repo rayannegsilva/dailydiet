@@ -38,7 +38,6 @@ export function Button({ variant = 'primary', title, icon, isLoading, ...rest}: 
       <RectButton
         {...rest}
         style={baseStyle.button}
-        activeOpacity={1}
        >
        {
         isLoading ? (

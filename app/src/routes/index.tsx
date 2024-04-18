@@ -4,13 +4,13 @@ import { AppStackRoutes } from "./app.stack.routes";
 import { useAuth } from "../hooks/auth";
 
 export function Routes() {
-  const { user } = useAuth()
+  const { token } = useAuth()
 
+  console.log(token)
 
   return (
     <NavigationContainer>
-      {
-        user && user.token
+      { token
         ? (<PrivateStackRoutes />)
         : (<AppStackRoutes />)
       }

@@ -5,9 +5,7 @@ import { theme } from "../global/theme";
 import { Feather } from '@expo/vector-icons'
 import { BorderlessButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { MealItem } from "../components/meal-item";
 import { Percent } from "../components/percent";
-import { getMetrics } from "../hooks/meal";
 import { getUserStats } from "../hooks/useStatistics";
 
 

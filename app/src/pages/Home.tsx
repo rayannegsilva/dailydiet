@@ -7,14 +7,14 @@ import { Button } from "../components/button";
 import { Percent } from "../components/percent";
 import { Text } from "../components/ui/Typography/Text";
 import { RectButton } from "react-native-gesture-handler";
-import { MealItem, MealProps } from "../components/meal-item";
+import { MealItem } from "../components/meal-item";
 import { useNavigation } from "@react-navigation/native";
 import { theme } from "../global/theme";
-import { getMealById, getMeals, getMetrics } from "../hooks/meal";
-import { MealNavigationProps } from "../@types/navigation";
+
 import { getUserMeals } from "../hooks/useMeal";
 import { getUserStats } from "../hooks/useStatistics";
-// import { getUserStatistics } from "../hooks/useStatistics";
+import dayjs from "dayjs";
+
 
 export function Home () {
   const { top } = useSafeAreaInsets();
@@ -46,7 +46,9 @@ function handleCreateMeal() {
       <View style={styles.header}>
         <LogoSvg />
         <Pressable onPress={handleToProfile}>
-           <Avatar />
+           <Avatar 
+            size={40}
+           />
         </Pressable> 
       </View>
      {
@@ -92,14 +94,36 @@ function handleCreateMeal() {
       ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
       contentContainerStyle={{ paddingBottom: 24 }}
       keyExtractor={(item) => item.id}
-      renderItem={({ item } ) => (
-        <RectButton onPress={() => handleToMeal(item.id)}>
-          <MealItem 
-            meal={item}
-          />
-        </RectButton>
-      )}
+      renderItem={({ item, index} ) => {
+        const firstMealOfDay = index === 0 ||
+        new Date(item.date).getDate() !==
+          new Date(meal.meals![index - 1].date).getDate();
+
+          const Meal = (
+            <RectButton onPress={() => handleToMeal(item.id)}>
+              <MealItem 
+                meal={item}
+              />
+          </RectButton>
+          )
+
+          if(firstMealOfDay) {
+            return (
+              <View style={{gap: 8, marginTop: 32}}>
+                <Text size="lg" weight="bold" color="gray.100">
+                  {dayjs(item.date).format('DD.MM.YYYY')}
+                </Text>
+
+                {Meal}
+              </View>
+            )
+          }
+        
+         return Meal
+      }}
+    
     />
+    
     </View>
   )
 }
@@ -119,6 +143,5 @@ const styles = StyleSheet.create({
   listHeader: {
     marginTop: 40,
     gap: 8,
-    marginBottom: 32,
   }
 })

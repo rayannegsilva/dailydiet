@@ -10,10 +10,11 @@ import { CreateMealForm, mealSchema, MealSchema } from "../components/form/creat
 import { useForm } from "react-hook-form";
 import { Button } from "../components/button";
 import { createUserMeal } from "../hooks/useMeal";
-
-
+import { useState } from "react";
 
 export function MealCreate() {
+  const [loading, isLoading] = useState(false)
+  
   const safeAreaInsets = useSafeAreaInsets();
   const navigation = useNavigation()
 
@@ -34,26 +35,28 @@ export function MealCreate() {
 
   const onSubmit = async (data: MealSchema) => {
    try {
-    data.date.setHours(data.hour.getHours())
-    data.date.setMinutes(data.hour.getMinutes())
-    data.date.setSeconds(0)
-    data.date.setMilliseconds(0)
+   
+      data.date.setHours(data.hour.getHours())
+      data.date.setMinutes(data.hour.getMinutes())
+      data.date.setSeconds(0)
+      data.date.setMilliseconds(0)
 
-    const isDiet = data.isDiet === 'on-diet'
+      const isDiet = data.isDiet === 'on-diet'
 
-    await createNewMeal.mutateAsync({
-      title: data.title,
-      description: data.description,
-      date: data.date,
-      isDiet
-    })
+      await createNewMeal.mutateAsync({
+        title: data.title,
+        description: data.description,
+        date: data.date,
+        isDiet
+      })
 
     navigation.navigate('Feedback', {
       isDiet
     })
+
    } catch (error) {
     console.log(error)
-   }
+   } 
   }
 
   return (
@@ -71,12 +74,13 @@ export function MealCreate() {
         <CreateMealForm 
           form={form}
         />
-        // TODO: DESABILITAR O BOTÃO QUANDO FOR FAZER O FETCH
+        {/* // TODO: DESABILITAR O BOTÃO QUANDO FOR FAZER O FETCH */}
         <View style={{ marginTop: 'auto'}}>
           <Button
             onPress={() => form.handleSubmit(onSubmit)()}
             title="Cadastrar Refeição"
-            
+            // isLoading={loading}
+            // enabled={form.formState.isValid}
           />
         </View>
       </View>

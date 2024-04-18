@@ -8,6 +8,7 @@ export function ControllerTextInput<FormType extends FieldValues>({
   rules,
   defaultValue,
   shouldUnregister,
+
   ...rest
 }: TextInputProps & UseControllerProps<FormType>) {
   return  (

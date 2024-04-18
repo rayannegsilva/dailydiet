@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { api } from '../lib/api'
 import { CreateMealProps, MealProps, UpdatedUserMealProps } from './interfaces'
+import { Meal } from '../interfaces/Meal'
 
 export function getUserMeals () {
   const { data: meals, isLoading: mealsLoading, isFetching: mealsFetching } = useQuery<MealProps[]>({
@@ -61,18 +62,18 @@ export function createUserMeal() {
 
   return useMutation({
     mutationFn: async ({ date, description, isDiet, title }: CreateMealProps) => {
-      console.log(date, description, isDiet, title)
       const response = await api.post('/api/meal', {
         date, description, isDiet, title
       })
 
-      console.log(response)
-
       return response.data
     },
     onSuccess: (data) => {
+       queryClient.invalidateQueries({
+        queryKey: ['meals']
+      })
       queryClient.invalidateQueries({
-        queryKey: ['meals', 'userStats']
+        queryKey: ['userStats']
       })
 
       queryClient.setQueryData(['mealById', data.id], data)
@@ -84,8 +85,8 @@ export function updatedUserMeal (mealId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: UpdatedUserMealProps) => {
-      const response = await api.put(`/api/meal/${mealId}`, { data })
+    mutationFn: async ({ title, date, description, isDiet, mealId }: UpdatedUserMealProps) => {
+      const response = await api.put<Meal>(`/api/meal/${mealId}`, { title, date, description, isDiet })
 
       return response.data
     },
@@ -93,11 +94,11 @@ export function updatedUserMeal (mealId: string) {
       queryClient.invalidateQueries({
         queryKey: ['userStats']
       })
-
       queryClient.setQueryData(['mealById', data.id], data)
-      queryClient.setQueryData(['meals'], (meals?: MealProps[]) => {
-        if(!meals) return undefined
 
+      queryClient.setQueryData(['meals'], (meals: MealProps[]) => {
+        if(!meals) return undefined
+        
         return meals.map((meal) => {
           if (meal.id === mealId) return data
           return meal
