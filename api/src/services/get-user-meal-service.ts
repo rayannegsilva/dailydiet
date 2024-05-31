@@ -1,3 +1,4 @@
+import { NotFoundError } from "../helpers/api-error"
 import { Meal } from "../model/Meal"
 import { User } from "../model/User"
 
@@ -8,11 +9,16 @@ interface GetUserMealRequest {
 export class GetUserMealService {
   async execute({ userId }: GetUserMealRequest) {
     const user = await User.findById(userId)
+
     if(!user) {
-      throw new Error('Usuário não encontrado')
+      throw new NotFoundError('Usuário não encontrado')
     }
 
-    const meals = await Meal.find({ userId })
+    const meals = await Meal.find({ userId }).sort({ date:  -1 })
+
+    if (!meals) {
+      throw new NotFoundError('Refeições do usuário não encontradas.')
+    }
 
     const userMeals = meals.map((meal) => ({
       id: meal._id,

@@ -7,7 +7,6 @@ export class CreateMealController {
       const { title, description, date, isDiet } = req.body
       const userId = req.user_id
 
-
       const createMealService = new CreateMealService()
 
       const meal = await createMealService.execute({
@@ -16,6 +15,6 @@ export class CreateMealController {
 
       res.status(201).json(meal)
     } catch (error) {
-      console.error
+      return error
     }
 }}

@@ -6,8 +6,6 @@ export class SignInController {
     try {
       const { email, password } = req.body
 
-      console.log(email, password)
-
       const singInService = new SignInService()
 
       const auth = await singInService.execute({
@@ -17,7 +15,7 @@ export class SignInController {
       return res.json(auth)
     } catch (error) {
       console.log(error)
-      throw new Error('Não foi possível realizar o login.')
+      return error
     }
   }
 }

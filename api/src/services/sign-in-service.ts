@@ -1,6 +1,14 @@
 import { User } from "../model/User"
 import { compare } from "bcrypt"
+import { Unauthorized } from "../helpers/api-error"
 import { sign } from "jsonwebtoken"
+
+interface User {
+  id: string
+  name: string | null | undefined
+  email: string | null | undefined
+  profile_photo: string | null | undefined
+}
 
 interface SignInRequest {
   email: string
@@ -8,44 +16,43 @@ interface SignInRequest {
 }
 
 interface SignInResponse {
-  id: string
-  name: string | null | undefined
-  email: string | null | undefined
-  profile_photo: string | null | undefined
+  user: User
   token: string
 }
 
 export class SignInService {
   async execute({ email, password }: SignInRequest): Promise<SignInResponse> {
-    const user = await User.findOne({
+    const userFind = await User.findOne({
       email
     })
 
-    if (!user) {
-      throw new Error('Usuário ou senha incorreta.')
+    if (!userFind) {
+      throw new Unauthorized('Usuário ou senha incorreta.')
     }
 
-    const passwordMatch = await compare(password, user.password as string)
+    const passwordMatch = await compare(password, userFind.password as string)
 
     if (!passwordMatch) {
-      throw new Error('Usuário ou senha incorreta.')
+      throw new Unauthorized('Usuário ou senha incorreta.')
     }
 
     const token = sign (
-      {
-        name: user.name,
-        email: user.email
-      }, process.env.JWT_SECRET as string, {
-        subject: user.id,
-        expiresIn: '1 day'
+      { email: userFind.email },
+      process.env.JWT_SECRET as string,
+      { subject: userFind.id,
+        expiresIn: '7d'
       })
 
+      const user = {
+        id: userFind.id,
+        name: userFind.name || '',
+        email: userFind.email,
+        profile_photo: userFind.profile_photo || '',
+      }
+
       return {
-        id: user.id,
-        name: user.name || '',
-        email: user.email,
-        profile_photo: user.profile_photo || '',
-        token
+        token,
+        user
       }
   }
 }

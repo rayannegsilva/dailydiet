@@ -13,7 +13,7 @@ export class GetUserMealsController {
         return res.status(200).json(meals)
       } catch (error) {
         console.error(error)
-        res.status(500).json({ message: error })
+        return error
       }
   }
 }

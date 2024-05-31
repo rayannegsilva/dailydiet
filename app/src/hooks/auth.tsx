@@ -48,8 +48,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.get('/api/user')
 
-      console.log(response)
-
       setUser({
         id: response.data.id,
         email: response.data.email,

@@ -4,5 +4,4 @@ Este projeto é api desenvolvida para o projeto Daily Diet.
 
 ## Padrão
 
-Nessa api, o padrão de commits estabelicidos pode ser visualizado em:
-[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+Essa API foi construída utilizando NodeJS e ExpressJs. Além disso, o banco de dados utilizado é o MongoDB, junto do monngoose para lidar com o armanezamento de dados.

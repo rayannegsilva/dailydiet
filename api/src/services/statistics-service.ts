@@ -1,6 +1,7 @@
 import { compare } from "bcrypt"
 import { Meal } from "../model/Meal"
 import { User } from "../model/User"
+import { NotFoundError } from "../helpers/api-error"
 
 interface UserStatisticsRequest {
   userId: string
@@ -11,7 +12,7 @@ export class UserStatisticsService {
     const user = await User.findById(userId)
 
     if(!user) {
-      throw new Error('Usuário não encontrado')
+      throw new NotFoundError('Usuário não encontrado')
     }
 
     const meals = await Meal.find({ userId }).sort({ date: 1 })
@@ -29,8 +30,6 @@ export class UserStatisticsService {
       }
       return acc;
     }, { currentSequence: 0, maxSequence: 0 }).maxSequence;
-
-
 
     return  {
      total: totalOfMeals,
