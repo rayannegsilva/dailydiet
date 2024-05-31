@@ -8,6 +8,20 @@ Veja como funciona:
 
 O layout da aplicação pode ser visto no [Figma](https://www.figma.com/file/CoRq7b97NXH7rp7QU9I3Cx/Daily-Diet-(Copy)?type=design&node-id=0-1&mode=design&t=z8q1qQ59961I389y-0). Para conseguir copiar o layout, é necessário que você se cadastre na platforma.
 
+Algumas imagens da aplicação:
+<div>
+  <img src="./images/IMG_4068.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4075.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4069.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4070.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4071.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4072.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4073.PNG" alt="Texto Alternativo" width="200" height="400">
+  <img src="./images/IMG_4074.PNG" alt="Texto Alternativo" width="200" height="400">
+
+</div>
+
+
 ## Technologies
 
 - [React Native](https://reactnative.dev/)
