@@ -2,6 +2,8 @@
 
 Aplicação utilizada para controle de dietas. Cadastre suas refeições, veja suas informações e acompanhe seu progresso de maneira rápida e prática.
 
+Veja como funciona: 
+
 ## Layout
 
 O layout da aplicação pode ser visto no [Figma](https://www.figma.com/file/CoRq7b97NXH7rp7QU9I3Cx/Daily-Diet-(Copy)?type=design&node-id=0-1&mode=design&t=z8q1qQ59961I389y-0). Para conseguir copiar o layout, é necessário que você se cadastre na platforma.
