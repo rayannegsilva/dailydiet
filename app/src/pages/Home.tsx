@@ -14,13 +14,17 @@ import { theme } from "../global/theme";
 import { getUserMeals } from "../hooks/useMeal";
 import { getUserStats } from "../hooks/useStatistics";
 import dayjs from "dayjs";
+import { useAuth } from "../hooks/auth";
 
 
 export function Home () {
   const { top } = useSafeAreaInsets();
   const navigation = useNavigation()
+  const { user  } = useAuth()
+
 
   const meal = getUserMeals()
+ 
   const queryStats = getUserStats()
 
   const toStatistics = () => {
@@ -41,12 +45,15 @@ function handleCreateMeal() {
   navigation.navigate('MealCreate')
 }
 
+const avatarUrl = `https://ui-avatars.com/api/?background=EFF0F0&name=${user?.name}`; 
+
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
       <View style={styles.header}>
         <LogoSvg />
         <Pressable onPress={handleToProfile}>
-           <Avatar 
+           <Avatar
+            url={avatarUrl}
             size={40}
            />
         </Pressable> 

@@ -25,10 +25,6 @@ export function MealEdit() {
   const queryMealById = getUserMealById(mealId)
   const queryUpdateMeal = updatedUserMeal(mealId)
 
-  const goBack = () => {
-    navigation.goBack()
-  }
-
   const form = useForm<MealSchema>({
     resolver: zodResolver(mealSchema),
     defaultValues: 
@@ -79,12 +75,12 @@ export function MealEdit() {
           form={form}
         />
 
-       {/* <View style={{ marginTop: 'auto'}}>
+       <View style={{ marginTop: 'auto'}}>
           <Button
             onPress={() => form.handleSubmit(onEditMeal)()}
-            title="Cadastrar Refeição"
+            title="Editar Refeição"
           />
-        </View>    */}
+        </View>   
       </View>
     </View>
   )

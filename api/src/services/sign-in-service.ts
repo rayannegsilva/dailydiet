@@ -45,7 +45,7 @@ export class SignInService {
 
       const user = {
         id: userFind.id,
-        name: userFind.name || '',
+        name: userFind.name,
         email: userFind.email,
         profile_photo: userFind.profile_photo || '',
       }

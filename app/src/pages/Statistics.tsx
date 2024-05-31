@@ -58,8 +58,6 @@ export function Statistics() {
             <Text color="gray.200" size={"sm"} style={styles.text}>refeições fora da dieta</Text>
           </Percent>
         </View>
-
-
       </View>
     </View>
   </View>
