@@ -16,6 +16,7 @@ export function Profile() {
   const { top, bottom } = useSafeAreaInsets();
   const { signOut, user, updatedUser } = useAuth()
 
+  console.log(user)
   const navigation = useNavigation()
   
   const handleToSignOut = async () => {
@@ -29,6 +30,8 @@ export function Profile() {
   const handleToChangeName = () => {
 
   }
+  
+  const avatarUrl = `https://ui-avatars.com/api/?background=EFF0F0&name=${user.name}`; 
 
   return (
     <View style={[styles.container, { paddingTop: top + 12 }]}>
@@ -37,10 +40,11 @@ export function Profile() {
       />
       <View style={[styles.content,  { paddingBottom: bottom + 12 }]}>
         <View style={{ alignItems: 'center', width: '100%', position: 'relative', gap: 12}}>
-          <Avatar 
+          <Avatar
+            url={avatarUrl}
             size={120}
           />
-          <Text size={14} weight="bold">Rayanne Giló</Text>
+          <Text size={14} weight="bold">{user?.name}</Text>
         </View>
 
         <View>

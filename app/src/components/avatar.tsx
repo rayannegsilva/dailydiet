@@ -3,13 +3,14 @@ import { theme } from "../global/theme";
 
 interface AvatarProps {
   size: number
+  url: string
 }
 
-export function Avatar({ size }: AvatarProps ) {
+export function Avatar({ size, url}: AvatarProps ) {
   return (
     <Image
       style={[styles.image, { borderRadius: size / 2}]}
-      source={{ uri: 'https://avatars.githubusercontent.com/u/69162451?v=4'}}
+      source={{ uri: url}}
       height={size}
       width={size}
     />
