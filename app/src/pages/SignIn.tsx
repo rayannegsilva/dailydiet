@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native"
 import { useState } from "react"
 import { Text } from "../components/ui/Typography/Text"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
+import { FormPasswordInput } from "../components/form/form-password-input"
 
 export function SignIn() {
   const { signIn, user } = useAuth()
@@ -67,11 +68,11 @@ export function SignIn() {
               name="email"
             />
 
-            <ControllerTextInput
+            <FormPasswordInput
               label="Senha"
-              secureTextEntry
               control={form.control}
               name="password"
+              placeholder="Digite sua senha"
             />
 
             <Button
