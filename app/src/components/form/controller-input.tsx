@@ -25,6 +25,7 @@ export function ControllerTextInput<FormType extends FieldValues>({
           onChangeText={(text) => field.onChange(text)}
           error={fieldState.error?.message}
         />
+        
       )}
     />
   )
