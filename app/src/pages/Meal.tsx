@@ -2,14 +2,11 @@ import { ActivityIndicator, StatusBar, StyleSheet, View } from "react-native";
 import { theme } from "../global/theme";
 import dayjs from 'dayjs';
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Text } from "../components/ui/Typography/Text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { MealProps } from "../components/meal-item";
 import { RectButton } from "react-native-gesture-handler";
 
 import { AntDesign } from '@expo/vector-icons'
-import { Dot } from "../components/dot";
-import { Button } from "../components/button";
+import { Button, Dot, Text } from "../components";
 
 import { MealNavigationProps } from "../@types/navigation";
 import { deleteUserMeal, getUserMealById } from "../hooks/useMeal";

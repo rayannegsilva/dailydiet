@@ -3,7 +3,7 @@ import {ActivityIndicator, FlatList, Pressable, StyleSheet, View } from "react-n
 import LogoSvg from '../assets/logo.svg'
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Avatar } from "../components/avatar";
-import { Button } from "../components/button";
+import { Button } from "../components/ui/buttons";
 import { Percent } from "../components/percent";
 import { Text } from "../components/ui/Typography/Text";
 import { RectButton } from "react-native-gesture-handler";

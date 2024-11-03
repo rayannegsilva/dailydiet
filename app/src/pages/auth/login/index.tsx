@@ -1,7 +1,7 @@
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import LogoSVG from '../assets/logo.svg'
 import { useLoginModel } from "./login.model"
-import { ControllerTextInput } from "../../../components/form/controller-input"
+import { ControllerTextInput } from "../../../components/form/form-input"
 import { FormPasswordInput } from "../../../components/form/form-password-input"
 import { Button } from "../../../components/button"
 import { Text } from "../../../components/ui/Typography/Text"

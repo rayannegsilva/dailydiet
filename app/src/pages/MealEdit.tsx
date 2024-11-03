@@ -5,10 +5,9 @@ import { AntDesign } from '@expo/vector-icons'
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { theme } from "../global/theme";
 import { Text } from "../components/ui/Typography/Text";
-import { CreateMealForm, MealSchema, mealSchema } from "../components/form/create-meal-form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../components/button";
+import { Button, CreateMealForm, MealSchema, mealSchema  } from "../components";
 
 import { getUserMealById, updatedUserMeal } from "../hooks/useMeal";
 import { MealNavigationProps } from "../@types/navigation";
