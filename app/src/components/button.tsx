@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
 import { exhaustive } from "exhaustive";
 import { Feather } from '@expo/vector-icons'
@@ -6,14 +6,14 @@ import { Feather } from '@expo/vector-icons'
 import { Text } from "./ui/Typography/Text";
 import { theme } from "../global/theme";
 
-export type ButtonProps = Omit<RectButtonProps, 'style'> & {
+export type ButtonProps = Omit<TouchableOpacityProps, 'style'> & {
   variant?: 'primary' | 'outlined'
   title: string
   icon?: keyof typeof Feather.glyphMap
-  isLoading?: boolean
+  loading?: boolean
 }
 
-export function Button({ variant = 'primary', title, icon, isLoading, ...rest}: ButtonProps) {
+export function Button({ variant = 'primary', title, icon, loading, ...rest}: ButtonProps) {
   const variantStyles = exhaustive(variant, {
     primary: () => ({
       styles: primaryStyle,
@@ -33,14 +33,14 @@ export function Button({ variant = 'primary', title, icon, isLoading, ...rest}: 
 
   return  (
     <View 
-      style={[baseStyle.container, variantStyles.styles.container, (rest.enabled === false || isLoading) && baseStyle.disable]}
+      style={[baseStyle.container, variantStyles.styles.container, 
+      (rest.disabled === true || loading) && baseStyle.disable]}
     >
-      <RectButton
+      <TouchableOpacity
         {...rest}
         style={baseStyle.button}
        >
-       {
-        isLoading ? (
+       { loading ? (
           <ActivityIndicator
             color={variantStyles.loadingColor}
           />
@@ -57,7 +57,7 @@ export function Button({ variant = 'primary', title, icon, isLoading, ...rest}: 
           <Text size="sm" weight="bold" color={variantStyles.textColor}>{title}</Text>
         </>
        )}
-      </RectButton>
+      </TouchableOpacity>
     </View>
   )
 }

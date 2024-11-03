@@ -10,7 +10,6 @@ export function PasswordInput (props: PasswordInputProps) {
   const [isSecureTextEntry, setIsSecureEntry] = useState(true);
 
   function changeSecureTextEntry () {
-    console.log(isSecureTextEntry)
     setIsSecureEntry(prev => !prev);
   }
 

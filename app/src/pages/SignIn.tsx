@@ -1,7 +1,7 @@
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import LogoSVG from '../assets/logo.svg'
 import { theme } from "../global/theme"
-import { ControllerTextInput } from "../components/form/controller-input"
+// import { ControllerTextInput } from "../components/form/controller-input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod';
@@ -12,6 +12,7 @@ import { useState } from "react"
 import { Text } from "../components/ui/Typography/Text"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { FormPasswordInput } from "../components/form/form-password-input"
+import { ControllerTextInput } from "../components/form/controller-input"
 
 export function SignIn() {
   const { signIn, user } = useAuth()
@@ -21,21 +22,20 @@ export function SignIn() {
 
   const signUpSchema = z.object({
     email: z.string({ required_error: 'Email é obrigatório'}).email('Email é inválido'),
-    password: z.string({ required_error: 'Senha é obrigatória'})
+    password: z.string({ required_error: 'Senha é obrigatória' })
   })
 
   type SignInData = z.infer<typeof signUpSchema>
 
-  const form = useForm({
+  const {control, formState, handleSubmit } = useForm<SignInData>({
     resolver: zodResolver(signUpSchema)
   })
 
-  const handleSubmit = async (data: SignInData) => {
+
+  const onSubmit =  async (data: SignInData) => {
     try {
-        isLoading(true)
-        const email = data.email
-        const password = data.password
-        await signIn(email, password)
+        isLoading(true) 
+        await signIn(data.email, data.password)
     } catch (error) {
       isLoading(false)
       console.log(error)
@@ -63,23 +63,24 @@ export function SignIn() {
           />
           <View style={styles.content}>
             <ControllerTextInput 
-              label="Email"
-              control={form.control}
+              control={control}
               name="email"
+              label="E-mail"
+              // placeholder="Digite seu e-mail"
             />
 
             <FormPasswordInput
-              label="Senha"
-              control={form.control}
+              control={control}
               name="password"
-              placeholder="Digite sua senha"
+              label="Senha"
+              // placeholder="Digite sua senha"
             />
 
             <Button
               title="Entrar"
-              onPress={() => form.handleSubmit(handleSubmit)()}
-              enabled={form.formState.isValid || loading}
-              isLoading={loading}
+              onPress={handleSubmit(onSubmit)}
+              disabled={!formState.isValid}
+              loading={loading}
             />
 
             <View style={{ alignItems: 'center', justifyContent: 'center'}}>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   content: {
-    gap: 24,
+    gap: 10,
     width: '100%',
     
   }
