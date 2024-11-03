@@ -65,7 +65,6 @@ function AuthProvider({ children }: AuthProviderProps) {
    }
   }, [token, user])
 
-
   const context = useMemo<AuthContextProps>(() => {
     return {
       signIn: async (email: string, password: string) => {

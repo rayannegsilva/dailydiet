@@ -1,13 +1,11 @@
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
 import { TextInput, TextInputProps } from "./text-input";
-
+import { theme } from "../../global/theme";
 
 export function ControllerTextInput<FormType extends FieldValues>({
   control,
   name,
   rules,
-  defaultValue,
-  shouldUnregister,
   ...rest
 }: TextInputProps & UseControllerProps<FormType>) {
   return  (
@@ -15,14 +13,13 @@ export function ControllerTextInput<FormType extends FieldValues>({
       control={control}
       name={name}
       rules={rules}
-      defaultValue={defaultValue}
-      shouldUnregister={shouldUnregister}
       render={({ field, fieldState}) => (
         <TextInput 
-          {...rest}
           value={field.value}
-          onChangeText={(text) => field.onChange(text)}
+          onChangeText={field.onChange}
           errorMessage={fieldState.error?.message}
+          placeholderTextColor={theme.colors.gray[500]}
+          {...rest}
         />
       )}
     />

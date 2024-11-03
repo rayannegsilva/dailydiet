@@ -49,13 +49,14 @@ export function SignUp() {
 
   type SignUpData = z.infer<typeof signUpSchema>
 
-  const form = useForm<SignUpData>({
+  const {control, handleSubmit, formState } = useForm<SignUpData>({
     resolver: zodResolver(signUpSchema)
   })
 
   
  const handleSignUp = async (data: SignUpData) => {
     try {
+      console.log('oi')
       isLoading(true)
 
       const email = data.email
@@ -93,34 +94,34 @@ export function SignUp() {
           <View style={styles.content}>
             <ControllerTextInput 
                 label="Email"
-                control={form.control}
+                control={control}
                 name="email"
               />
 
               <ControllerTextInput 
                   label="Nome"
-                  control={form.control}
+                  control={control}
                   name="name"
                 />
 
               <ControllerTextInput 
                   label="Senha"
-                  control={form.control}
+                  control={control}
                   name="password"
                   secureTextEntry
                 />
               <ControllerTextInput 
                   label="Confirme sua senha"
-                  control={form.control}
+                  control={control}
                   name="confirmedPassword"
                   secureTextEntry
                 />
                 <View style={{ marginBottom: bottom + 12 }}>
                   <Button 
                     title="Cadastrar"
-                    onPress={() => form.handleSubmit(handleSignUp)()}
-                    enabled={form.formState.isValid || loading}
-                    isLoading={loading}
+                    onPress={() => handleSubmit(handleSignUp)()}
+                    disabled={!formState.isValid}
+                    loading={loading}
                   />
           </View>
            </View>

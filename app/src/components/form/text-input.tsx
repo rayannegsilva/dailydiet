@@ -3,6 +3,7 @@ import { Text } from "../ui/Typography/Text";
 import { theme } from "../../global/theme";
 import { useRef } from "react";
 
+
 export interface TextInputProps extends InputProps {
   label?: string
   errorMessage?: string
@@ -13,66 +14,50 @@ export interface TextInputProps extends InputProps {
 
 export function TextInput({ 
   label, 
-  onChangeText, 
+  LeftComponent, 
+  RightComponent, 
   errorMessage, 
-  RightComponent,
-  LeftComponent,
-  ...rest 
+  ...inputProps 
 }: TextInputProps) {
-  const inputRef = useRef<Input>(null)
+  const inputRef = useRef<Input>(null);
 
   function focusInput() {
     inputRef.current?.focus();
   }
 
   return (
-    <View style={styles.container}> 
-      <Pressable style={{ gap: 4 }}>
+    <View style={styles.container}>
+      <Pressable style={styles.container} onPress={focusInput}>
         {label && (
-          <Text size={"sm"} weight="bold">
-            {label}
+          <Text size={'sm'}>
+              {label}
           </Text>
         )}
-
-       <View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
           {LeftComponent && (
-            <View>
+            <View > 
               {LeftComponent}
             </View>
           )}
-
           <Input
+            {...inputProps}
+            autoCapitalize="none"
+            ref={inputRef}
+            placeholderTextColor={theme.colors.gray[500]}
             style={styles.input}
-            { ...rest}
           />
-
           {RightComponent && (
-            <View>
+            <View style={{marginLeft: 6 }}>
               {RightComponent}
             </View>
           )}
-       </View>
-       {errorMessage && (
-        <Text size={"sm"} color="red.dark">
-          {errorMessage}
-        </Text>
-       )}
+        </View>
+          {errorMessage && (
+            <Text size={"sm"} color="red.dark">
+              {errorMessage}
+            </Text>
+          )}
       </Pressable>
-      {/* 
-        <Input
-          {...rest}
-          autoCapitalize="none"
-          style={styles.input}
-          placeholderTextColor={theme.colors.gray[400]}
-          onChangeText={onChangeText}
-          ref={inputRef}
-        />
-
-        { error && 
-          <Text size={"sm"} color="red.dark">
-            {error}
-          </Text>
-        } */}
     </View>
   )
 }
@@ -81,6 +66,9 @@ const styles = StyleSheet.create({
   container: {
     gap: 8,
     width: '100%'
+  },
+  content: {
+    gap: 8
   },
   inputContainer: {
     flexDirection: 'row',
