@@ -2,15 +2,11 @@ import { StyleSheet, View } from "react-native";
 import { Text } from "../components/ui/Typography/Text";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { theme } from "../global/theme";
-import { RectButton } from "react-native-gesture-handler";
-import { AntDesign, Feather } from '@expo/vector-icons'
-import { Button } from "../components/button";
 import { useAuth } from "../hooks/auth";
 import { Avatar } from "../components/avatar";
 import { useNavigation } from "@react-navigation/native";
 import { HeaderSimple } from "../components/header-simple";
-import { ButtonOpacity } from "../components/button-opacity";
-import { Percent } from "../components/percent";
+import { ButtonOpacity } from "../components";
 
 export function Profile() {
   const { top, bottom } = useSafeAreaInsets();

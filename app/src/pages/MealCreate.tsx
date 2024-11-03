@@ -4,11 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons'
 import { RectButton } from "react-native-gesture-handler";
-import { Text } from "../components/ui/Typography/Text";
 import { useNavigation } from "@react-navigation/native";
-import { CreateMealForm, mealSchema, MealSchema } from "../components/form/create-meal-form";
 import { useForm } from "react-hook-form";
-import { Button } from "../components/button";
+import { Button, Text, CreateMealForm, mealSchema, MealSchema } from "../components";
 import { createUserMeal } from "../hooks/useMeal";
 import { useState } from "react";
 

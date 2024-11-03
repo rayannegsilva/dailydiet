@@ -1,9 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { ControllerTextInput } from "./controller-input";
+import { FormTextInput } from "./form-input";
 import { z } from 'zod'
 import { Controller, UseFormReturn } from "react-hook-form";
-import { ControllerDatePicker } from "./controller-datepicker";
-import { ButtonOption } from "../button-option";
+import { FormDatePicker } from "./form-datepicker";
+import { ButtonOption } from "./../ui/buttons";
 import { Text } from "../ui/Typography/Text";
 
 export const mealSchema = z.object({
@@ -25,13 +25,13 @@ export interface MealFormProps {
 export function CreateMealForm({ form }: MealFormProps) {
   return (
     <View style={{ gap: 24 }}>
-      <ControllerTextInput 
+      <FormTextInput 
         label="Nome"
         name="title"
         control={form.control}
       />
 
-      <ControllerTextInput 
+      <FormTextInput 
         label="Descrição"
         name="description"
         control={form.control}
@@ -39,7 +39,7 @@ export function CreateMealForm({ form }: MealFormProps) {
     
       <View style={{ flexDirection: 'row', gap: 12}}>
         <View style={{flex: 1}}>
-        <ControllerDatePicker 
+        <FormDatePicker 
           label="Data"
           name="date"
           control={form.control}
@@ -47,7 +47,7 @@ export function CreateMealForm({ form }: MealFormProps) {
         />
         </View>
         <View style={{flex: 1}}>
-          <ControllerDatePicker 
+          <FormDatePicker 
             label="Hora"
             name="hour"
             control={form.control}

@@ -1,6 +1,6 @@
 import { StyleSheet, View, TextInput as Input, TextInputProps as InputProps, Pressable } from "react-native";
-import { Text } from "../ui/Typography/Text";
-import { theme } from "../../global/theme";
+import { Text } from "../Typography/Text";
+import { theme } from "../../../global/theme";
 import { useRef } from "react";
 
 

@@ -3,8 +3,8 @@ import { Platform, Pressable, View } from 'react-native';
 import { TextInput } from './text-input';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { useState } from 'react';
-import { theme } from '../../global/theme';
-import { Text } from '../ui/Typography/Text';
+import { theme } from '../../../global/theme';
+import { Text } from '../Typography/Text';
 
 export interface DatePickerProps {
   label: string

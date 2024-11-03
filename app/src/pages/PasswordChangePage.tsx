@@ -1,15 +1,13 @@
 import { Pressable, StyleSheet, View } from "react-native";
 import { AntDesign, Feather } from '@expo/vector-icons'
 import { theme } from "../global/theme";
-import { Button } from "../components/button";
+import { Button, FormTextInput, Avatar } from "../components";
 import { useAuth } from "../hooks/auth";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { RectButton } from "react-native-gesture-handler";
 import { Text } from "../components/ui/Typography/Text";
-import { z } from 'zod';
-import { Avatar } from "../components/avatar";
-import { ControllerTextInput } from "../components/form/controller-input";
+import { z } from 'zod';;
 import {  useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -97,27 +95,28 @@ export function PasswordChangePage() {
           </Pressable>
           <Avatar 
             size={180}
+            url=""
           />
         </View>
 
         <View style={{ gap: 8 }}>
-          <ControllerTextInput 
+          <FormTextInput 
             label="E-mail"
             name="email"
             editable={false}
             control={form.control}
           />
-          <ControllerTextInput 
+          <FormTextInput 
             label="Senha"
             name="currentPassword"
             control={form.control}
           />
-          <ControllerTextInput 
+          <FormTextInput 
             label="Nova senha"
             name="newPassword"
             control={form.control}
           />
-           <ControllerTextInput 
+           <FormTextInput 
             label="Nova senha"
             name="confirmedPassword"
             control={form.control}

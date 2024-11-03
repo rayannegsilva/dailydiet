@@ -1,7 +1,7 @@
 import { Controller, FieldValues, UseControllerProps } from "react-hook-form";
-import { DatePickerInput, DatePickerProps } from "./datepicker-input";
+import { DatePickerInput, DatePickerProps } from "../ui/inputs/datepicker-input";
 
-export function ControllerDatePicker<FormType extends FieldValues>({ 
+export function FormDatePicker<FormType extends FieldValues>({ 
   control, name, rules, ...rest }: DatePickerProps & UseControllerProps<FormType>) {
    return (
     <Controller 

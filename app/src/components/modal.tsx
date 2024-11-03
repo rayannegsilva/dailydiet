@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Modal as RNModal, StyleSheet, Alert, View } from 'react-native'
+import { Modal as RNModal, ModalProps as RNModalProps, StyleSheet, Alert, View } from 'react-native'
 import { theme } from '../global/theme';
 import { Text } from './ui/Typography/Text';
 
-export function Modal() {
+interface ModalProps extends RNModalProps {}
+
+export function Modal(props: ModalProps ) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Feather } from '@expo/vector-icons'
-import { TextInput, TextInputProps } from "./form/text-input"
+import { TextInput, TextInputProps } from "./text-input"
 import { Pressable } from "react-native";
-import { theme } from "../global/theme";
+import { theme } from "../../../global/theme";
 
 export type PasswordInputProps = Omit<TextInputProps, 'RightComponent'>;
 

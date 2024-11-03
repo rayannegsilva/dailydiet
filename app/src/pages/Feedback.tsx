@@ -6,7 +6,7 @@ import { theme } from "../global/theme";
 
 import onDietPNG from '../assets/images/is-on-diet.png'
 import outDietPNG  from '../assets/images/is-out-diet.png'
-import { Button } from "../components/button";
+import { Button } from "../components/ui/buttons";
 
 export function Feedback() {
 

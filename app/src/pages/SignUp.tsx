@@ -6,11 +6,10 @@ import { AntDesign, } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native"
 import { Text } from "../components/ui/Typography/Text"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { RectButton, ScrollView } from "react-native-gesture-handler"
-import { ControllerTextInput } from "../components/form/controller-input"
+import { RectButton } from "react-native-gesture-handler"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "../components/button"
+import { Button, FormTextInput } from "../components"
 
 import { z } from 'zod';
 import { useAuth } from "../hooks/auth"
@@ -25,20 +24,20 @@ export function SignUp() {
   const [loading, isLoading] = useState(false)
 
   const signUpSchema = z.object({
-    email:  z.string({ required_error: 'Email é obrigatório'}).email('Email é inválido'),
-    name: z.string({ required_error: 'Informe um nome.'}),
-    password: z.string({ required_error: 'Senha é obrigatória'}),
-    confirmedPassword: z.string({ required_error: 'É obrigatório a senha de confirmação.'})
+    email: z.string({ required_error: 'Email é obrigatório' }).email('Email é inválido'),
+    name: z.string({ required_error: 'Informe um nome.' }),
+    password: z.string({ required_error: 'Senha é obrigatória' }),
+    confirmedPassword: z.string({ required_error: 'É obrigatório a senha de confirmação.' })
   }).superRefine((data, ctx) => {
-    if(data.confirmedPassword && !data.password) {
-     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'É necessário informar uma senha.',
-      path: ['password']
-     })
+    if (data.confirmedPassword && !data.password) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'É necessário informar uma senha.',
+        path: ['password']
+      })
     }
 
-    if(data.confirmedPassword !== data.password) {
+    if (data.confirmedPassword !== data.password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'As senhas não batem',
@@ -49,14 +48,13 @@ export function SignUp() {
 
   type SignUpData = z.infer<typeof signUpSchema>
 
-  const {control, handleSubmit, formState } = useForm<SignUpData>({
+  const { control, handleSubmit, formState } = useForm<SignUpData>({
     resolver: zodResolver(signUpSchema)
   })
 
-  
- const handleSignUp = async (data: SignUpData) => {
+
+  const handleSignUp = async (data: SignUpData) => {
     try {
-      console.log('oi')
       isLoading(true)
 
       const email = data.email
@@ -67,68 +65,68 @@ export function SignUp() {
     } catch (error) {
       console.log(error)
     }
- }
-  
+  }
+
   const handleGoBack = () => {
     navigation.goBack()
   }
 
   return (
-   
-    <KeyboardAvoidingView 
-      style={{ flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height' }
+
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 
     >
-       <TouchableWithoutFeedback
+      <TouchableWithoutFeedback
         onPress={Keyboard.dismiss}
-       >
+      >
         <View style={[styles.container, { paddingTop: top + 12 }]}>
           <View style={styles.header}>
             <RectButton style={{ width: 24 }} onPress={handleGoBack}>
-             <AntDesign name="arrowleft" size={24} color={theme.colors.gray[200]}/>
+              <AntDesign name="arrowleft" size={24} color={theme.colors.gray[200]} />
             </RectButton>
             <Text weight="bold" size={"3xl"}>Cadastre uma{' '}</Text>
-            <Text  weight="bold" size={"3xl"} color="green.dark">Conta </Text>
+            <Text weight="bold" size={"3xl"} color="green.dark">Conta </Text>
           </View>
           <View style={styles.content}>
-            <ControllerTextInput 
-                label="Email"
-                control={control}
-                name="email"
+            <FormTextInput
+              label="Email"
+              control={control}
+              name="email"
+            />
+
+            <FormTextInput
+              label="Nome"
+              control={control}
+              name="name"
+            />
+
+            <FormTextInput
+              label="Senha"
+              control={control}
+              name="password"
+              secureTextEntry
+            />
+            <FormTextInput
+              label="Confirme sua senha"
+              control={control}
+              name="confirmedPassword"
+              secureTextEntry
+            />
+            <View style={{ marginBottom: bottom + 12 }}>
+              <Button
+                title="Cadastrar"
+                onPress={() => handleSubmit(handleSignUp)()}
+                disabled={!formState.isValid}
+                loading={loading}
               />
-
-              <ControllerTextInput 
-                  label="Nome"
-                  control={control}
-                  name="name"
-                />
-
-              <ControllerTextInput 
-                  label="Senha"
-                  control={control}
-                  name="password"
-                  secureTextEntry
-                />
-              <ControllerTextInput 
-                  label="Confirme sua senha"
-                  control={control}
-                  name="confirmedPassword"
-                  secureTextEntry
-                />
-                <View style={{ marginBottom: bottom + 12 }}>
-                  <Button 
-                    title="Cadastrar"
-                    onPress={() => handleSubmit(handleSignUp)()}
-                    disabled={!formState.isValid}
-                    loading={loading}
-                  />
+            </View>
           </View>
-           </View>
-        </View>    
+        </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  
+
   )
 }
 
@@ -146,6 +144,6 @@ const styles = StyleSheet.create({
   content: {
     gap: 12,
     width: '100%',
-    
+
   }
 })

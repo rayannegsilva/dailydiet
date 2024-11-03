@@ -1,18 +1,15 @@
 import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
 import LogoSVG from '../assets/logo.svg'
 import { theme } from "../global/theme"
-// import { ControllerTextInput } from "../components/form/controller-input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from 'zod';
-import { Button } from "../components/button"
+import { Button, FormTextInput, FormPasswordInput } from "../components"
 import { useAuth } from "../hooks/auth"
 import { useNavigation } from "@react-navigation/native"
 import { useState } from "react"
 import { Text } from "../components/ui/Typography/Text"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { FormPasswordInput } from "../components/form/form-password-input"
-import { ControllerTextInput } from "../components/form/controller-input"
+
 
 export function SignIn() {
   const { signIn, user } = useAuth()
@@ -62,7 +59,7 @@ export function SignIn() {
             height={60}
           />
           <View style={styles.content}>
-            <ControllerTextInput 
+            <FormTextInput 
               control={control}
               name="email"
               label="E-mail"
