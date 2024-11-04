@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SignInService } from "../services/sign-in-service";
+import { ApiError } from "../helpers/api-error";
 
 export class SignInController {
   async handler (req: Request, res: Response) {
@@ -15,7 +16,16 @@ export class SignInController {
       return res.json(auth)
     } catch (error) {
       console.log(error)
-      return error
+      if (error instanceof ApiError) {
+        return res.status(error.statusCode).json({
+          status: error.statusCode,
+          message: error.message,
+        });
+      }
+
+      return res.status(500).json({
+        message: "Erro interno do servidor. Tente novamente mais tarde.",
+      });
     }
   }
 }
