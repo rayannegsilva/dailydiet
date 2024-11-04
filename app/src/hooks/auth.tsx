@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useEffect, useMemo, useState } from "react";
 import { api } from "../lib/api";
 import { useAsyncStorage } from "./useAsyncStorage";
+import { Alert } from "react-native";
 
 type User = {
   id: string
@@ -80,8 +81,10 @@ function AuthProvider({ children }: AuthProviderProps) {
 
           setToken(response.data.token)
 
+
         } catch (error) {
-          console.log(error)
+          console.log('erro', error)
+          Alert.alert("Erro", "Usuário ou senha incorretos. Tente novamente.")
         }
       },
       signOut: async () => {
@@ -116,6 +119,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
         } catch (error) {
           console.log(error)
+          Alert.alert("Erro", "Usuário existente.")
         }
       },
       token,
