@@ -1,4 +1,4 @@
-import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native"
+import { Keyboard, KeyboardAvoidingView, Platform, Pressable, StyleSheet, TouchableWithoutFeedback, View, Alert} from "react-native"
 import LogoSVG from '../assets/logo.svg'
 import { theme } from "../global/theme"
 import { useForm } from "react-hook-form"
@@ -24,7 +24,7 @@ export function SignIn() {
 
   type SignInData = z.infer<typeof signUpSchema>
 
-  const {control, formState, handleSubmit } = useForm<SignInData>({
+  const {control, formState, handleSubmit, reset } = useForm<SignInData>({
     resolver: zodResolver(signUpSchema)
   })
 
@@ -35,7 +35,8 @@ export function SignIn() {
         await signIn(data.email, data.password)
     } catch (error) {
       isLoading(false)
-      console.log(error)
+      Alert.alert("Erro", "Usuário ou senha incorretos. Tente novamente.")
+      reset()
     } finally {
       isLoading(false)
     }

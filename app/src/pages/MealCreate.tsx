@@ -33,7 +33,6 @@ export function MealCreate() {
 
   const onSubmit = async (data: MealSchema) => {
    try {
-   
       data.date.setHours(data.hour.getHours())
       data.date.setMinutes(data.hour.getMinutes())
       data.date.setSeconds(0)

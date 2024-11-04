@@ -12,9 +12,8 @@ export function FormDatePicker<FormType extends FieldValues>({
         ({ field, fieldState}) => (
           <DatePickerInput 
             {...rest}
-            onChange={(date) => field.onChange(date)}
+            onChange={field.onChange}
             value={field.value}
-            error={fieldState.error?.message}
           />
         )
       }

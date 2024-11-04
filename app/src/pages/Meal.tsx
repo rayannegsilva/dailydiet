@@ -6,15 +6,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RectButton } from "react-native-gesture-handler";
 
 import { AntDesign } from '@expo/vector-icons'
-import { Button, Dot, Text } from "../components";
+import { Button, Dot, Modal, Text } from "../components";
 
 import { MealNavigationProps } from "../@types/navigation";
 import { deleteUserMeal, getUserMealById } from "../hooks/useMeal";
+import { useState } from "react";
 
 export function Meal() {
   const { top, bottom } = useSafeAreaInsets();
   const navigation = useNavigation()
-  const route  = useRoute()
+  const route = useRoute()
+
+  const [openModel, setOpenModel] = useState(false)
 
   const { mealId } = route.params as MealNavigationProps
   const mealDelete = deleteUserMeal(mealId)
@@ -31,13 +34,22 @@ export function Meal() {
     })
   }
 
+  function handleOpenModal() {
+		setOpenModel(true)
+	}
+
+	function handleCloseModel() {
+		setOpenModel(false)
+	}
+
+
   const handleDeleteMeal = async () => {
     await mealDelete.mutateAsync()
 
     navigation.navigate('Home')
   }
 
-  if(!queryMealById.mealById && queryMealById.mealIdLoading) {
+  if (!queryMealById.mealById && queryMealById.mealIdLoading) {
     return (
       <View style={styles.fetching}>
         <ActivityIndicator color={theme.colors.green.dark} />
@@ -48,40 +60,59 @@ export function Meal() {
   const formattedDate = dayjs(queryMealById.mealById.date).format('DD/MM/YYYY [às] HH:mm');
 
   return (
-    <View 
-      style={[styles.container, { paddingTop: top + 12, backgroundColor: queryMealById.mealById.isDiet ? theme.colors.green.light : theme.colors.red.light}]}
-    >
-      <StatusBar backgroundColor={queryMealById.mealById.isDiet ? theme.colors.green.light : theme.colors.red.light}/>
-      <View style={styles.header}>
-        <RectButton style={styles.goBackButton} onPress={goBack}>
-          <AntDesign name="arrowleft" size={24} color={queryMealById.mealById.isDiet ? theme.colors.green.dark : theme.colors.red.dark}/>
-        </RectButton>
-        <Text size="lg" weight="bold">Refeição</Text>
+    <>
+      <View
+        style={[styles.container, { paddingTop: top + 12, backgroundColor: queryMealById.mealById.isDiet ? theme.colors.green.light : theme.colors.red.light }]}
+      >
+        <StatusBar backgroundColor={queryMealById.mealById.isDiet ? theme.colors.green.light : theme.colors.red.light} />
+        <View style={styles.header}>
+          <RectButton
+            style={styles.goBackButton}
+            onPress={goBack}
+          >
+            <AntDesign
+              name="arrowleft"
+              size={24}
+              color={queryMealById.mealById.isDiet ? theme.colors.green.dark : theme.colors.red.dark}
+            />
+          </RectButton>
+          <Text size="lg" weight="bold">
+            Refeição
+          </Text>
+        </View>
+
+        <View style={[styles.content, { paddingBottom: bottom + 12 }]}>
+          <View style={[styles.meal]}>
+            <Text size={"lg"} weight="bold" color="gray.100">{queryMealById.mealById.title}</Text>
+            <Text>{queryMealById.mealById.description}</Text>
+          </View>
+
+          <View style={[styles.meal]}>
+            <Text weight="bold" size={"sm"}>Data e Hora</Text>
+            <Text>{formattedDate}</Text>
+          </View>
+
+          <View style={styles.tag}>
+            <Dot size={8} color={queryMealById.mealById.isDiet ? theme.colors.green.dark : theme.colors.red.dark} />
+            {queryMealById.mealById.isDiet ? (<Text>dentro da dieta</Text>) : <Text>fora da dieta</Text>}
+          </View>
+
+          <View style={styles.footer}>
+            <Button title="Editar Refeição" icon="edit-3" variant="primary" onPress={handleToMealEdit} />
+            <Button title="Excluir Refeição" icon="trash-2" variant="outlined" onPress={handleOpenModal} />
+          </View>
+        </View>
       </View>
 
-      <View  style={[styles.content, { paddingBottom: bottom + 12 }]}>
-        <View style={[styles.meal]}>
-           <Text size={"lg"} weight="bold" color="gray.100">{queryMealById.mealById.title}</Text>
-          <Text>{queryMealById.mealById.description}</Text>
-        </View>
-
-        <View style={[styles.meal]}>
-          <Text weight="bold" size={"sm"}>Data e Hora</Text>
-           <Text>{formattedDate}</Text> 
-         </View>
-          
-        <View style={styles.tag}>
-          <Dot size={8} color={queryMealById.mealById.isDiet ? theme.colors.green.dark : theme.colors.red.dark}/>
-          {queryMealById.mealById.isDiet ? (<Text>dentro da dieta</Text>) : <Text>fora da dieta</Text>}
-        </View>
-
-        <View style={styles.footer}>
-          <Button title="Editar Refeição" icon="edit-3" variant="primary" onPress={handleToMealEdit}/>
-          <Button title="Excluir Refeição" icon="trash-2" variant="outlined" onPress={handleDeleteMeal}/>
-        </View>
-      </View>
-    </View> 
-   )
+      <Modal 
+        visible={openModel}  
+        onRequestClose={handleCloseModel}
+        onExcluded={handleDeleteMeal}
+        onGoOut={handleCloseModel}
+        closeModal={handleCloseModel}
+      />
+    </>
+  )
 }
 
 const styles = StyleSheet.create({

@@ -1,8 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
 import { Feather } from '@expo/vector-icons'
-import { theme } from "../global/theme";
-import { Text } from "./ui/Typography/Text";
+
+
+import { theme } from "../../../global/theme";
+import { Text } from "../Typography/Text";
 
 interface ButtonOpacityProps extends RectButtonProps {
   text: string

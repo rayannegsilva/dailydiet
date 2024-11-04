@@ -17,6 +17,7 @@ export function TextInput({
   LeftComponent, 
   RightComponent, 
   errorMessage, 
+  pointerEvents, 
   ...inputProps 
 }: TextInputProps) {
   const inputRef = useRef<Input>(null);
@@ -26,7 +27,7 @@ export function TextInput({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} pointerEvents={pointerEvents}>
       <Pressable style={styles.container} onPress={focusInput}>
         {label && (
           <Text size={'sm'}>

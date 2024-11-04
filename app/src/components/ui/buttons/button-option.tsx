@@ -1,9 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
-import { Dot } from "./dot";
-import { Text } from "./ui/Typography/Text";
-import { theme } from "../global/theme";
+
 import { useRef } from "react";
+import { theme } from "../../../global/theme";
+import { Dot } from "../../dot";
+import { Text } from "../Typography/Text";
 
 interface ButtonOptionProps extends RectButtonProps {
   label: string

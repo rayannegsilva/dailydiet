@@ -1,10 +1,7 @@
 import { StatusBar, StyleSheet, View } from "react-native";
-import { RectButton } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { AntDesign } from '@expo/vector-icons'
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { theme } from "../global/theme";
-import { Text } from "../components/ui/Typography/Text";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, CreateMealForm, MealSchema, mealSchema  } from "../components";

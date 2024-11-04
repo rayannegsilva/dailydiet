@@ -2,9 +2,9 @@ import { ActivityIndicator, StyleSheet, View, TouchableOpacity, TouchableOpacity
 import { RectButton, RectButtonProps } from "react-native-gesture-handler";
 import { exhaustive } from "exhaustive";
 import { Feather } from '@expo/vector-icons'
+import { theme } from "../../../global/theme";
+import { Text } from "../Typography/Text";
 
-import { Text } from "./ui/Typography/Text";
-import { theme } from "../global/theme";
 
 export type ButtonProps = Omit<TouchableOpacityProps, 'style'> & {
   variant?: 'primary' | 'outlined'
@@ -66,7 +66,7 @@ const baseStyle = StyleSheet.create({
     container: {
       borderRadius: 6,
       borderWidth: 1,
-      width: "100%"
+      // width: "100%"
     },
     button: {
       flexDirection: 'row',

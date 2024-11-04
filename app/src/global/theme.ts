@@ -1,6 +1,7 @@
 export const theme = {
   colors: {
     white: '#fff',
+    overlay: 'rgba(0,0,0,0.7)',
     red: {
       light: '#F4E6E7',
       mid: '#F3BABD',

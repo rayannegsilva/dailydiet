@@ -11,7 +11,6 @@ export interface DatePickerProps {
   value?: Date
   onChange?: (date: Date) => void
   mode: 'date' | 'time'
-  error?: string
 }
 
 const config = {
@@ -33,7 +32,7 @@ const config = {
   }
 } as const
 
-export function DatePickerInput ({ label, value, mode, onChange, error}: DatePickerProps) {
+export function DatePickerInput ({ label, value, mode, onChange }: DatePickerProps) {
   const [visible, setVisible] = useState(false)
   
   const platform = config[Platform.OS as 'ios' | 'android'][mode]
@@ -44,7 +43,7 @@ export function DatePickerInput ({ label, value, mode, onChange, error}: DatePic
 
   const handleConfirm = (date: Date) => {
     setVisible(false)
-    onChange(date)
+    if (onChange) onChange(date)
   }
 
   return (
@@ -54,16 +53,11 @@ export function DatePickerInput ({ label, value, mode, onChange, error}: DatePic
       >   
         <TextInput
           pointerEvents='none'
-          label={label}
           value={formattedDate}
+          label={label}
           caretHidden
           showSoftInputOnFocus={false}
         />
-        {error && 
-          <Text size={"sm"} color="red.dark">
-            {error}
-          </Text>
-        }
       </Pressable>
 
       <DateTimePicker
