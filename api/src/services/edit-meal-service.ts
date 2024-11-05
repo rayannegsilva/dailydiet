@@ -34,6 +34,17 @@ export class EditMealService {
       throw new BadRequestError('Não vou possível editar o Meal.')
     }
 
-    return updateMeal
+    const formattedMeal = {
+      id: updateMeal._id,
+      title: updateMeal.title,
+      description: updateMeal.description,
+      date: updateMeal.date,
+      isDiet: updateMeal.isDiet,
+      createdAt: updateMeal.createdAt,
+      updatedAt: updateMeal.updatedAt,
+      userId: updateMeal.userId,
+    };
+
+    return formattedMeal
   }
 }
