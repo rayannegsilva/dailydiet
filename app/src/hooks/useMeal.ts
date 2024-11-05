@@ -94,13 +94,13 @@ export function updatedUserMeal (mealId: string) {
       queryClient.invalidateQueries({
         queryKey: ['userStats']
       })
-      queryClient.setQueryData(['mealById', data.id], data)
+      queryClient.setQueryData(['mealById', mealId], data)
 
-      queryClient.setQueryData(['meals'], (meals: MealProps[]) => {
+      queryClient.setQueryData(['meals'], (meals?: MealProps[]) => {
         if(!meals) return undefined
         
         return meals.map((meal) => {
-          if (meal.id === mealId) return data
+          if (meal.id === mealId) return data 
           return meal
         })
       })

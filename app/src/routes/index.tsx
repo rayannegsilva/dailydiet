@@ -6,8 +6,6 @@ import { useAuth } from "../hooks/auth";
 export function Routes() {
   const { token } = useAuth()
 
-  console.log(token)
-
   return (
     <NavigationContainer>
       { token
