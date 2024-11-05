@@ -8,8 +8,6 @@ export class EditMealController {
       const { title, description, date, isDiet } = req.body
       const userId = req.user_id
 
-      console.log(mealId)
-
       const editMealService = new EditMealService()
 
       const mealUpdate = await editMealService.execute({ userId, mealId, mealData: {title, description, date, isDiet }})
